@@ -1,0 +1,59 @@
+name: Recording
+description: Test recording
+start:
+  profile: LOGS COORD. PROFILE GOS
+steps:
+  - type: navigate
+    target:
+      - page: Customer List
+    description: Navigate to Customers
+  - type: page-shown
+    source:
+      page: Customer List
+    modal: false
+    runtimeId: bak
+    description: Page <caption>Customers</caption> was shown.
+  - type: invoke
+    target:
+      - page: Customer List
+        runtimeRef: bak
+      - repeater: Control1
+    invokeType: Edit
+    parameters:
+      AlwaysCommit: false
+    description: Invoke row on <caption>Control1</caption>
+  - type: page-shown
+    source:
+      page: Customer Card
+    modal: false
+    runtimeId: bs3
+    description: Page <caption>Customer Card</caption> was shown.
+  - type: copy-value
+    source:
+      - page: Customer Card
+        runtimeRef: bs3
+      - field: Name
+    name: Customer Card - Name
+    valueType: string
+    description: Copy value from <caption>Name</caption>
+  - type: input
+    target:
+      - page: Customer Card
+        runtimeRef: bs3
+      - field: Name
+    value: "=Clipboard.'Customer Card - Name' & Text(RandBetween(1000,9999))"
+    description: Input <value>Clipboard.'Customer Card - Name' </value> into
+      <caption>Name</caption>
+  - type: wait
+    time: =100
+    description: Wait for <value>100</value> milliseconds
+  - type: close-page
+    target:
+      - page: Customer Card
+        runtimeRef: bs3
+    description: Close page <caption>Customer Card</caption>
+  - type: page-closed
+    source:
+      page: Customer Card
+    runtimeId: bs3
+    description: Page <caption>Customer Card</caption> was closed.

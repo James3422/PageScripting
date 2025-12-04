@@ -1,0 +1,102 @@
+name: Recording
+description: New Customer with duplicate
+start:
+  profile: LOGS COORD. PROFILE GOS
+steps:
+  - type: navigate
+    target:
+      - page: Customer List
+    description: Navigate to Customers
+  - type: page-shown
+    source:
+      page: Customer List
+    modal: false
+    runtimeId: bjk
+    description: Page <caption>Customers</caption> was shown.
+  - type: invoke
+    target:
+      - page: Customer List
+        runtimeRef: bjk
+      - action: Control_New
+    invokeType: New
+    description: Invoke New on <caption>New</caption>
+  - type: page-shown
+    source:
+      page: Customer Card
+    modal: false
+    runtimeId: bt4
+    description: Page <caption>New - Customer Card</caption> was shown.
+  - type: focus
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: No.
+    description: Focus <caption>No.</caption>
+  - type: input
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: No.
+    value: UI-TEST
+    description: Input <value>UI-TEST</value> into <caption>No.</caption>
+  - type: focus
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: Name
+    description: Focus <caption>Name</caption>
+  - type: wait
+    time: =100
+    description: Wait for <value>100</value> milliseconds
+  - type: focus
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: Name
+    description: Focus <caption>Name</caption>
+  - type: input
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: Name
+    value: UI-TEST customer
+    description: Input <value>UI-TEST customer</value> into <caption>Name</caption>
+  - type: focus
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+      - field: Balance (LCY)
+    description: Focus <caption>Balance (LCY)</caption>
+  - type: close-page
+    target:
+      - page: Customer Card
+        runtimeRef: bt4
+    description: Close page <caption>New - Customer Card</caption>
+  - type: scope
+    condition:
+      type: page-shown
+      source:
+        page: null
+        automationId: f51cf5e3-31d1-4644-8a26-043efefc68d7
+        caption: Confirm
+      runtimeId: b11g
+    steps:
+      - type: invoke
+        target:
+          - page: null
+            automationId: f51cf5e3-31d1-4644-8a26-043efefc68d7
+            caption: Confirm
+            runtimeRef: b11g
+        invokeType: Yes
+        description: Invoke Yes on <caption>Confirm</caption>
+      - type: page-closed
+        source:
+          page: null
+        runtimeId: b11g
+        description: Page <caption>Confirm</caption> was closed.
+    description: If Page <caption>Confirm</caption> was shown.
+  - type: page-closed
+    source:
+      page: Customer Card
+    runtimeId: bt4
+    description: Page <caption>New - Customer Card</caption> was closed.
